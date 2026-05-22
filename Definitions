@@ -1,0 +1,10 @@
+bpcol --> bullet player collison
+
+
+
+                                                             BULLET CLASS
+                                                                  |
+                                                                  |
+                                                         |-------- ----------|
+                                                         |                   |
+                                                     LASER BEAMS        NORMAL BULLETS (nbullets)
