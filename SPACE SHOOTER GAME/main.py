@@ -319,7 +319,6 @@ while True:
         milkywayload()
         trollplayer()
         sides_image()
-        enemy_sol_2load()
         pausebuttonload()
         n = 1
         if enemy_alive == False:
