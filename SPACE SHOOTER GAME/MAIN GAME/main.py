@@ -1,23 +1,23 @@
 import pygame
 import random
 import cv2
-import time 
 from sys import exit
 pygame.init()
 #NO AI HAS BEEN USED TO MAKE THIS GAME AND WAS COMPLETELY MADE BY DEVADATHAN VALLOOR ONLY IDEAS OF THEME WAS TAKEN FROM AI ALL CODING ETC AND GAME DESIGN IS DONE WITHOUT IT
 screen = pygame.display.set_mode()  
 clock = pygame.time.Clock()
-
 pygame.display.set_caption("Galaxy Shooter")
-pygame.mixer.music.load('Assets/Music/turbo-cup-chase_pgBeN5O9.mp3')
-pygame.mixer.music.play(-1)
+
 #---------------------------------------------------------------------------------------------------------------------------------------->
 #Game Running Definitions
 
-
-
-#Game Functions like health ammo sheild etc
 #PLAYER DEFINITIONS
+Level = ''
+UserEvedeya = pygame.image.load('Assets/Map_Asset/WHERE ARE YOU USER.png')
+User_Evedeya = pygame.transform.scale(UserEvedeya,(1920,1080))
+Menu_Screen = pygame.image.load('Assets/Map_Asset/GALAXY SHOOTER.jpg')
+MenuScreen = pygame.transform.scale(Menu_Screen,(1920,1080))
+Level_Screen = pygame.image.load('Assets/Map_Asset/GALAXY SHOOTER GAME.png')
 Loading_Screen = pygame.image.load('Assets/Map_Asset/ChatGPT Image May 2, 2026, 12_01_35 AM.png')
 LoadingScreen = pygame.transform.scale(Loading_Screen,(1920,1100))
 Player_health = 100
@@ -58,10 +58,10 @@ enemy_sol = pygame.image.load('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Ass
 enemy_sol2 = pygame.image.load('Assets/Map_Asset/final_boss.png').convert_alpha()
 enemysol2 = pygame.transform.scale(enemy_sol2, (40,40))
 enemysol = pygame.transform.scale(enemy_sol, (40,40))
-sol_pos_x = random.randint(353,984) 
-sol_pos_y = random.randint(250,471)
-sol_pos_x2 = random.randint(353,984) 
-sol_pos_y2 = random.randint(250,471)
+sol_pos_x = random.randint(353,984)             #these are basically the inital positions/random postions of the enemies'''
+sol_pos_y = random.randint(250,471)             #'''''''''''''''''
+sol_pos_x2 = random.randint(353,984)            #''''''''''''''''''
+sol_pos_y2 = random.randint(250,471)            #''''''''''''''''''''
 enemy_alive = True
 enemy2_alive = True
 enemy_speed = 0.05
@@ -99,25 +99,53 @@ bullet_pos_y = player_jety
 Shooting = True
 meme_display_start = None
 keys = pygame.key.get_pressed()
-xmin = 400
-xmax = 900
-ymin = 490
-ymax = 630
+xmin = 400#######################
+xmax = 900                     #
+ymin = 490                     #  COORDINATES INSIDE THE TV
+ymax = 630#######################                     
 enemy_alive = True
 enemy2_alive = True
 Player_Alive = True
 TIME_OF_PLAY = 0
 DontLetPlayerWin = True
+MenuLoad = True
 
 
+
+pygame.mixer.music.load('Assets/Music/turbo-cup-chase_pgBeN5O9.mp3')
+pygame.mixer.music.play(-1)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------>
-#def menuload()
+def menuload():
+    global MenuLoad, Level
+    screen.blit(MenuScreen,(0,0))
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:#STRAIGHT TO PLAY AND HENCE NEXT SELECTION MENU GETS LOADED
+                screen.blit(Level_Screen,(0,0))
+                if event.key == pygame.K_1:
+                    MenuLoad = False  #BOOTING THE PLAYER INTO LEVEL 1
+                    Level = 1
+                if event.key == pygame.K_2: #BOOTING THE PLAYER INTO LEVEL 2
+                    MenuLoad = False
+                    Level = 2
+                if event.key == pygame.K_3: #BOOTING THE PLAYER INTO LEVEL 3
+                    MenuLoad = False
+                    Level = 3
+                if event.key == pygame.K_4: #BOOTING THE PLAYER INTO LEVEL 4
+                    MenuLoad = False
+                    Level = 4
+        
 
+            #WE NOW NEED TO LOAD THE PLAYER INTO THE DETAILS OF THE GAME'''
 
+def useridle():
+    screen.blit(User_Evedeya,(0,0))
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key -- pygame.K_ESCAPE:
+                return
 
-
-
-def jetload ():
+def jetload ():#THIS BASICALLY ARE ALL THE FUNCTIONS TO LOAD THE PLAYERS JET AND ALSO LIKE THe CONTROLLS OF IT ARE DEFINED ABOVE AND LOGIC APPLIED HERE
     global player_jet , playerjet , player_jet_surface , player_jetx , player_jety , player_jetvelx , player_jetvely    
     
     keys = pygame.key.get_pressed()
@@ -233,7 +261,6 @@ def enemy_sol_load2 ():
     if Enemy_Soldier_Health !=0:
         enemy_sol2_surface = enemysol2.get_rect(center = enemy_pos2)
     screen.blit(enemysol2,enemy_sol2_surface)
-    
 
 def milkywayload():
     screen.blit(milky_way_map,(300,200))
@@ -316,96 +343,101 @@ def trollplayer():
 '''------------------------------------------------------------------------------------------------------------------------------------------------------------->'''
 
 #GAME LOGIC
-
-while True:     
-    TIME_OF_PLAY += 1/60
-    if TIME_OF_PLAY<5:
-        screen.blit(LoadingScreen,(0,0))
-    
-    if TIME_OF_PLAY>5:
-        if enemy_sol_surface.colliderect(bullet_surface):
-            bullet_pos_x = player_jetx + 75
-            bullet_pos_y = player_jety
-            bulletenemycollission()
-        if enemy_sol2_surface.colliderect(bullet_surface):
-            bullet_pos_x = player_jetx + 75
-            bullet_pos_y = player_jety
-            bulletenemycollission()    
-        roomload()
-        milkywayload()
-        trollplayer()
-        sides_image()
-        enemy_sol_2
-        pausebuttonload()
-        n = 1
-        if enemy_alive == False:
-            o = 5/300
-        #if TIME_OF_PLAY == 9*n:
-
+Last_input_time = pygame.time.get_ticks()
+while True:
+    menuload()
+    Current_Time = pygame.time.get_ticks()
+    if Current_Time - Last_input_time > 20000:
+        useridle() 
+    if MenuLoad == False:    
+        TIME_OF_PLAY += 1/60
+        if TIME_OF_PLAY<5:
+            screen.blit(LoadingScreen,(0,0))
         
-        if TIME_OF_PLAY == 8:
-            which_sound = random.randint(1,5)
-            if which_sound == 1:
-                bass_sound.play()       
-    # Display meme for 2 seconds (NON-BLOCKING)
-        if meme_display_start is not None:
-            elapsed_time = pygame.time.get_ticks() - meme_display_start
-            if elapsed_time < 2000:  # 2 seconds
-                screen.blit(meme1, (500, 200))
-            else:
-                meme_display_start = None
+        if TIME_OF_PLAY>5:
+            if enemy_sol_surface.colliderect(bullet_surface):
+                bullet_pos_x = player_jetx + 75
+                bullet_pos_y = player_jety
+                bulletenemycollission()
+            if enemy_sol2_surface.colliderect(bullet_surface):
+                bullet_pos_x = player_jetx + 75
+                bullet_pos_y = player_jety
+                bulletenemycollission()    
+            roomload()
+            milkywayload()
+            trollplayer()
+            sides_image()
+            enemy_sol_2
+            pausebuttonload()
+            n = 1
+            if enemy_alive == False:
+                o = 5/300
+            #if TIME_OF_PLAY == 9*n:
 
-    #Code Logic    
-    #----Setting BOUNDARIES FOR THE PLAYER -------------
-        if Player_Alive:                               #-
-            jetload()                                  #-
-        if player_jetx <= xmin:                        #-
-            player_jetx = 400                          #-
-            player_jetvelx = 0                         #- 
-                                                       #-
-        if player_jetx >= xmax:                        #-
-            player_jetx = 890                          #-
-            player_jetvelx = 0		                   #-
-                                                       #-
-        if player_jety <= ymin:                        #- 
-            player_jety = 500                          #-
-            player_jetvely = 0                         #-
-                                                       #-
-        if player_jety >= ymax:                        #-
-            player_jety = 620                          #-
-            player_jetvely = 0                         #-
-    #---------------------------------------------------
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-            if event.type == pygame.MOUSEMOTION:
-                if pause_surface_rect.collidepoint(event.pos):
-                    exit() 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                click = pygame.mixer.Sound('Assets/Music/soundreality-sound-of-mouse-click-4-478760.mp3')
-                click.play()
+            
+            if TIME_OF_PLAY == 8:
+                which_sound = random.randint(1,5)
+                if which_sound == 1:
+                    bass_sound.play()       
+        # Display meme for 2 seconds (NON-BLOCKING)
+            if meme_display_start is not None:
+                elapsed_time = pygame.time.get_ticks() - meme_display_start
+                if elapsed_time < 2000:  # 2 seconds
+                    screen.blit(meme1, (500, 200))
+                else:
+                    meme_display_start = None
 
-        if enemy_pos == jet_pos:
-            Enemy_Soldier_Health -= 10
+        #Code Logic    
+        #----Setting BOUNDARIES FOR THE PLAYER -------------
+            if Player_Alive:                               #-
+                jetload()                                  #-
+            if player_jetx <= xmin:                        #-
+                player_jetx = 400                          #-
+                player_jetvelx = 0                         #- 
+                                                        #-
+            if player_jetx >= xmax:                        #-
+                player_jetx = 890                          #-
+                player_jetvelx = 0		                   #-
+                                                        #-
+            if player_jety <= ymin:                        #- 
+                player_jety = 500                          #-
+                player_jetvely = 0                         #-
+                                                        #-
+            if player_jety >= ymax:                        #-
+                player_jety = 620                          #-
+                player_jetvely = 0                         #-
+        #---------------------------------------------------
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.MOUSEMOTION:
+                    if pause_surface_rect.collidepoint(event.pos):
+                        exit() 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    click = pygame.mixer.Sound('Assets/Music/soundreality-sound-of-mouse-click-4-478760.mp3')
+                    click.play()
 
-        if Enemy_Soldier_Health == 0:
-            enemy_alive == False
-            score_surface = score.render('SCORE : 10',True,'White')
+            if enemy_pos == jet_pos:
+                Enemy_Soldier_Health -= 10
 
-        if Enemy_Soldier2_Health == 0:
-            enemy2_alive == False
-            score_surface = score.render('SCORE :',True,'White')
+            if Enemy_Soldier_Health == 0:
+                enemy_alive == False
+                score_surface = score.render('SCORE : 10',True,'White')
 
-        
-        if enemy_alive:
-            o = 0        
-            enemy_sol_load()
-            if o == 5:
-                enemy_alive = True        
-        if enemy2_alive:
-            enemy_sol_load2()       
-        nbulletload()   
+            if Enemy_Soldier2_Health == 0:
+                enemy2_alive == False
+                score_surface = score.render('SCORE :',True,'White')
+
+            
+            if enemy_alive:
+                o = 0        
+                enemy_sol_load()
+                if o == 5:
+                    enemy_alive = True        
+            if enemy2_alive:
+                enemy_sol_load2()       
+            nbulletload()   
     mouse_pos = pygame.mouse.get_pos()
     mouse_press = pygame.mouse.get_pressed()
     pygame.display.update()

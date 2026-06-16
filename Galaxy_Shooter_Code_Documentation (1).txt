@@ -1,0 +1,121 @@
+GALAXY SHOOTER CODE DOCUMENTATION
+
+PLAYER SYSTEM
+
+  Name                  Type       Purpose
+  --------------------- ---------- ---------------------------------
+  Player_health         Variable   Stores player’s health
+  player_jetx           Variable   Player X position
+  player_jety           Variable   Player Y position
+  player_jetacc         Variable   Jet acceleration
+  player_jetfriction    Variable   Slows jet gradually
+  player_jetvelx        Variable   Horizontal velocity
+  player_jetvely        Variable   Vertical velocity
+  player_jet            Surface    Original player sprite
+  playerjet             Surface    Scaled player sprite
+  player_jet_surface    Rect       Collision box of player
+  player_jet2           Surface    Alternative jet image
+  player_jet2_surface   Rect       Collision box for alternate jet
+  jet_pos               Vector2    Stores jet position vector
+  Player_Alive          Boolean    Whether player is alive
+
+ENEMY SYSTEM
+
+  Name                    Type       Purpose
+  ----------------------- ---------- --------------------------------------
+  Enemy_Soldier_Health    Variable   Enemy 1 health
+  Enemy_Soldier2_Health   Variable   Enemy 2/Boss health
+  enemy_sol               Surface    Enemy sprite
+  enemy_sol2              Surface    Boss sprite
+  enemysol                Surface    Scaled enemy sprite
+  enemysol2               Surface    Scaled boss sprite
+  sol_pos_x               Variable   Enemy target X
+  sol_pos_y               Variable   Enemy target Y
+  sol_pos_x2              Variable   Boss target X
+  sol_pos_y2              Variable   Boss target Y
+  enemy_alive             Boolean    Enemy alive status
+  enemy2_alive            Boolean    Boss alive status
+  enemy_speed             Variable   Enemy movement speed
+  enemy_sol_surface       Rect       Enemy hitbox
+  enemy_sol2_surface      Rect       Boss hitbox
+  enemy_pos               Vector2    Current enemy position
+  enemy_target            Vector2    Destination enemy moves toward
+  enemy_pos2              Vector2    Current boss position
+  enemy_target2           Vector2    Boss destination
+  generate_sol_pos_x      Boolean    Allows generation of new destination
+
+BULLET SYSTEM
+
+  Name             Type       Purpose
+  ---------------- ---------- ------------------------------
+  bulletog         Surface    Original bullet image
+  bullet           Surface    Scaled bullet
+  bullet_pos_x     Variable   Bullet X position
+  bullet_pos_y     Variable   Bullet Y position
+  bullet_surface   Rect       Bullet hitbox
+  Shooting         Boolean    Controls bullet firing state
+
+AUDIO SYSTEM
+
+bass_sound, bullet_sound, bullet_hit_sound, get_out, background music
+
+UI / MENU SYSTEM
+
+Menu_Screen, Level_Screen, Loading_Screen, LoadingScreen, score,
+score_surface, score_surface_rect, pause, pause_surface,
+pause_surface_rect
+
+MAP SYSTEM
+
+room, milky_way_map, xmin, xmax, ymin, ymax
+
+MEME/TROLL SYSTEM
+
+show_meme, Meme_Display_Time, meme_display_start, meme1
+
+TIMING VARIABLES
+
+spawn_timer, spawn_delay, TIME_OF_PLAY, timer
+
+GAME STATE VARIABLES
+
+MenuLoad, DontLetPlayerWin, enemy_alive, enemy2_alive
+
+FUNCTION LIST
+
+menuload() - Intended to load main menu useridle() - Intended
+idle-screen system jetload() - Moves and draws player changejet() -
+Moves player with alternate jet sprite roomload() - Draws room
+background sides_image() - Animates side decoration image
+enemy_sol_load() - Enemy 1 AI movement enemy_sol_2() - Duplicate enemy
+movement function enemy_sol_load2() - Boss AI movement milkywayload() -
+Draws Milky Way map loadscore() - Draws score pausebuttonload() - Draws
+quit button nbulletload() - Bullet firing logic
+bulletenemycollission() - Handles bullet damage trollplayer() - Displays
+random memes and sounds
+
+UNUSED VARIABLES
+
+spawn_timer, spawn_delay, timer, DontLetPlayerWin, show_meme,
+Meme_Display_Time, enemy_spawning, Menu_Screen, Level_Screen, jet_pos
+
+BIGGEST BUGS FOUND
+
+1.  if enemy_alive == False: o = 5/300 -> probably intended o = 5
+2.  enemy_alive == False -> should be enemy_alive = False
+3.  enemy2_alive == False -> should be enemy2_alive = False
+4.  enemy_sol_2 referenced but never called (missing parentheses)
+5.  playerjet2 scales wrong image
+6.  useridle() is empty
+7.  menuload() contains incomplete blocks
+8.  TIME_OF_PLAY == 8 is unreliable for float timing
+9.  enemy_pos == jet_pos will almost never be true
+
+GENERAL ASSESSMENT
+
+Advanced features already implemented: - Smooth acceleration - Friction
+physics - Enemy LERP movement - Collision detection - State variables -
+Random events/memes - Boss enemy system
+
+Recommendation: Convert Player, Enemy, and Bullet systems into classes
+for easier expansion.
