@@ -1,6 +1,5 @@
 import pygame
 import random
-import cv2
 from sys import exit
 pygame.init()
 #NO AI HAS BEEN USED TO MAKE THIS GAME AND WAS COMPLETELY MADE BY DEVADATHAN VALLOOR ONLY IDEAS OF THEME WAS TAKEN FROM AI ALL CODING ETC AND GAME DESIGN IS DONE WITHOUT IT
@@ -27,7 +26,7 @@ player_jetx = 500
 player_jety = 500
 player_jetacc = 1.5
 player_jetfriction = 0.85
-player_jet = pygame.image.load('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Map_Asset/player_jet.png').convert_alpha()
+player_jet = pygame.image.load('Assets/Map_Asset/player_jet.png').convert_alpha()
 side_image = pygame.image.load('Assets/Map_Asset/ChatGPT Image May 1, 2026, 11_06_22 PM.png').convert_alpha()
 sideimage = pygame.transform.scale(side_image,(900,700))
 playerjet = pygame.transform.scale(player_jet, (150, 150))
@@ -42,19 +41,22 @@ player_jetvely = 0
 jet_pos = pygame.Vector2(player_jetx,player_jety)
 #MAP ATMOSPHERE DEFINITIONS AND ROOM DEFINITIONS
 bass_sound = pygame.mixer.Sound('Assets/Music/brvhrtz-stab-f-01-brvhrtz-224599.mp3')
-room = pygame.image.load('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Map_Asset/wp2005666-doddle-art-wallpapers.jpg').convert() 
-milky_way_map = pygame.image.load('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Map_Asset/MilkyWayMap.png').convert_alpha()
-score = pygame.font.Font('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
+room = pygame.image.load('Assets/Map_Asset/wp2005666-doddle-art-wallpapers.jpg').convert()
+room2 = pygame.image.load('Assets/Map_Asset/ChatGPT Image Jun 17, 2026, 09_05_14 AM.png') 
+room3 = ''
+room4 = ''
+milky_way_map = pygame.image.load('Assets/Map_Asset/MilkyWayMap.png').convert_alpha()
+score = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
 score_surface = score.render('SCORE :',True,'White')
 score_surface_rect = score_surface.get_rect(topleft = (1300,0) )
-pause = pygame.font.Font('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
+pause = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
 pause_surface1 = pause.render('-->PAUSE<--',True,'White')
 pause_surface_rect1 = pause_surface1.get_rect(topleft = (1330,19))
 #Troll Image Controlling
 show_meme = True
 Meme_Display_Time = pygame.time.get_ticks()  #<--- CHECKS WHEN IMAGE HAS STARTED DISPLAYING ON THE USERS SCREEN
 #ENEMY SOLDIER DEFINITIONS
-enemy_sol = pygame.image.load('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Map_Asset/enemysoldier.png').convert_alpha()
+enemy_sol = pygame.image.load('Assets/Map_Asset/enemysoldier.png').convert_alpha()
 enemy_sol2 = pygame.image.load('Assets/Map_Asset/final_boss.png').convert_alpha()
 enemysol2 = pygame.transform.scale(enemy_sol2, (40,40))
 enemysol = pygame.transform.scale(enemy_sol, (40,40))
@@ -78,11 +80,11 @@ x = 1200          # current position
 target_x = 1200   # where it should move to
 enemy_pos2 = pygame.Vector2(sol_pos_x2,sol_pos_y2)
 enemy_target2 = pygame.Vector2(sol_pos_x2,sol_pos_y2)
-milky_way_map = pygame.image.load('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Map_Asset/MilkyWayMap.png').convert_alpha()
-score = pygame.font.Font('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
+milky_way_map = pygame.image.load('Assets/Map_Asset/MilkyWayMap.png').convert_alpha()
+score = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
 score_surface = score.render('SCORE :',True,'White')
 score_surface_rect = score_surface.get_rect(topleft = (1300,0) )
-pause = pygame.font.Font('C:/Users/thund/Desktop/PYTHON PYGAME PROJECTS/Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
+pause = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf',30)
 pause_surface = pause.render('-->QUIT<--',True,'White')
 pause_surface_rect = pause_surface.get_rect(topleft = (1330,19))
 #BULLETS AND ADDONS
@@ -120,7 +122,7 @@ def menuload():
     screen.blit(MenuScreen,(0,0))
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:#STRAIGHT TO PLAY AND HENCE NEXT SELECTION MENU GETS LOADED
+            if event.key == pygame.K_a:#STRAIGHT TO PLAY AND HENCE NEXT SELECTION MENU GETS LOADED
                 screen.blit(Level_Screen,(0,0))
                 if event.key == pygame.K_1:
                     MenuLoad = False  #BOOTING THE PLAYER INTO LEVEL 1
@@ -134,7 +136,9 @@ def menuload():
                 if event.key == pygame.K_4: #BOOTING THE PLAYER INTO LEVEL 4
                     MenuLoad = False
                     Level = 4
-        
+            #if event.key == pygame.K_d:#Load the about section as the user want to see about page
+                
+                
 
             #WE NOW NEED TO LOAD THE PLAYER INTO THE DETAILS OF THE GAME'''
 
@@ -192,8 +196,17 @@ def changejet():
     screen.blit(player_jet2,player_jet_surface)
 
 def roomload ():
-    global room,milky_way_map , score , score_surface , score_surface_rect , pause , pause_surface ,pause_surface_rect
-    screen.blit(room,(0,0))
+    global room
+    if Level == 1:
+        screen.blit(room,(0,0))
+    if Level ==2:
+        screen.blit(room2,(0,0))
+    if Level ==3:
+        screen.blit(room3,(0,0))
+    if Level ==4:
+        screen.blit(room4,(0,0))
+    else:
+        pass
 
 def sides_image():
     global x, target_x
