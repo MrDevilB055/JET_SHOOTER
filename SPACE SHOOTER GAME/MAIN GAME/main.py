@@ -111,6 +111,8 @@ Player_Alive = True
 TIME_OF_PLAY = 0
 DontLetPlayerWin = True
 MenuLoad = True
+Level_Load = ''
+StartGame = False
 
 
 
@@ -118,38 +120,70 @@ pygame.mixer.music.load('Assets/Music/turbo-cup-chase_pgBeN5O9.mp3')
 pygame.mixer.music.play(-1)
 #------------------------------------------------------------------------------------------------------------------------------------------------------------>
 def menuload():
-    global MenuLoad, Level
-    screen.blit(MenuScreen,(0,0))
-    for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:#STRAIGHT TO PLAY AND HENCE NEXT SELECTION MENU GETS LOADED
-                screen.blit(Level_Screen,(0,0))
+    global MenuLoad,Level,Level_Load
+    if MenuLoad == True:
+        screen.blit(MenuScreen,(0,0))
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:#STRAIGHT TO PLAY AND HENCE NEXT SELECTION MENU GETS LOADED
+                    MenuLoad = False
+                    Level_Load = True
+                    break
+                break
+                
+
+                
+                
+
+#WE NOW NEED TO LOAD THE PLAYER INTO THE DETAILS OF THE GAME
+
+def LevelLoad():
+    global MenuLoad, Level, Level_Load , StartGame
+
+    if Level_Load:
+        screen.blit(Level_Screen, (0, 0))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
-                    MenuLoad = False  #BOOTING THE PLAYER INTO LEVEL 1
+                    MenuLoad = False
+                    Level_Load = False
                     Level = 1
-                if event.key == pygame.K_2: #BOOTING THE PLAYER INTO LEVEL 2
+                    StartGame = True
+                    return
+
+                elif event.key == pygame.K_2:
                     MenuLoad = False
+                    Level_Load = False
                     Level = 2
-                if event.key == pygame.K_3: #BOOTING THE PLAYER INTO LEVEL 3
+                    StartGame = True
+                    return
+
+                elif event.key == pygame.K_3:
                     MenuLoad = False
+                    Level_Load = False
                     Level = 3
-                if event.key == pygame.K_4: #BOOTING THE PLAYER INTO LEVEL 4
+                    StartGame = True
+                    return
+
+                elif event.key == pygame.K_4:
                     MenuLoad = False
+                    Level_Load = False
                     Level = 4
-            #if event.key == pygame.K_d:#Load the about section as the user want to see about page
-                
-                
-
-            #WE NOW NEED TO LOAD THE PLAYER INTO THE DETAILS OF THE GAME'''
-
+                    StartGame = True
+                    return
 def useridle():
     screen.blit(User_Evedeya,(0,0))
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key -- pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE:
                 return
 
-def jetload ():#THIS BASICALLY ARE ALL THE FUNCTIONS TO LOAD THE PLAYERS JET AND ALSO LIKE THe CONTROLLS OF IT ARE DEFINED ABOVE AND LOGIC APPLIED HERE
+def jetload ():#THIS BASICALLY ARE ALL THE FUNCTIONS TO LOAD THE PLAYERS JET AND ALSO LIKE THE CONTROLLS OF IT ARE DEFINED ABOVE AND LOGIC APPLIED HERE
     global player_jet , playerjet , player_jet_surface , player_jetx , player_jety , player_jetvelx , player_jetvely    
     
     keys = pygame.key.get_pressed()
@@ -358,68 +392,72 @@ def trollplayer():
 #GAME LOGIC
 Last_input_time = pygame.time.get_ticks()
 while True:
-    menuload()
-    Current_Time = pygame.time.get_ticks()
-    if Current_Time - Last_input_time > 20000:
-        useridle() 
-    if MenuLoad == False:    
-        TIME_OF_PLAY += 1/60
-        if TIME_OF_PLAY<5:
-            screen.blit(LoadingScreen,(0,0))
-        
-        if TIME_OF_PLAY>5:
-            if enemy_sol_surface.colliderect(bullet_surface):
-                bullet_pos_x = player_jetx + 75
-                bullet_pos_y = player_jety
-                bulletenemycollission()
-            if enemy_sol2_surface.colliderect(bullet_surface):
-                bullet_pos_x = player_jetx + 75
-                bullet_pos_y = player_jety
-                bulletenemycollission()    
-            roomload()
-            milkywayload()
-            trollplayer()
-            sides_image()
-            enemy_sol_2
-            pausebuttonload()
-            n = 1
-            if enemy_alive == False:
-                o = 5/300
-            #if TIME_OF_PLAY == 9*n:
-
+    if MenuLoad == True:
+        menuload()
+    if Level_Load == True:
+        LevelLoad()
+    if StartGame == True:
+        Current_Time = pygame.time.get_ticks()
+        if Current_Time - Last_input_time > 20000:
+            useridle() 
+        if MenuLoad == False:    
+            TIME_OF_PLAY += 1/60
+            if TIME_OF_PLAY<5:
+                screen.blit(LoadingScreen,(0,0))
             
-            if TIME_OF_PLAY == 8:
-                which_sound = random.randint(1,5)
-                if which_sound == 1:
-                    bass_sound.play()       
-        # Display meme for 2 seconds (NON-BLOCKING)
-            if meme_display_start is not None:
-                elapsed_time = pygame.time.get_ticks() - meme_display_start
-                if elapsed_time < 2000:  # 2 seconds
-                    screen.blit(meme1, (500, 200))
-                else:
-                    meme_display_start = None
+            if TIME_OF_PLAY>5:
+                if enemy_sol_surface.colliderect(bullet_surface):
+                    bullet_pos_x = player_jetx + 75
+                    bullet_pos_y = player_jety
+                    bulletenemycollission()
+                if enemy_sol2_surface.colliderect(bullet_surface):
+                    bullet_pos_x = player_jetx + 75
+                    bullet_pos_y = player_jety
+                    bulletenemycollission()    
+                roomload()
+                milkywayload()
+                trollplayer()
+                sides_image()
+                enemy_sol_2
+                pausebuttonload()
+                n = 1
+                if enemy_alive == False:
+                    o = 5/300
+                #if TIME_OF_PLAY == 9*n:
 
-        #Code Logic    
-        #----Setting BOUNDARIES FOR THE PLAYER -------------
-            if Player_Alive:                               #-
-                jetload()                                  #-
-            if player_jetx <= xmin:                        #-
-                player_jetx = 400                          #-
-                player_jetvelx = 0                         #- 
-                                                        #-
-            if player_jetx >= xmax:                        #-
-                player_jetx = 890                          #-
-                player_jetvelx = 0		                   #-
-                                                        #-
-            if player_jety <= ymin:                        #- 
-                player_jety = 500                          #-
-                player_jetvely = 0                         #-
-                                                        #-
-            if player_jety >= ymax:                        #-
-                player_jety = 620                          #-
-                player_jetvely = 0                         #-
-        #---------------------------------------------------
+                
+                if TIME_OF_PLAY == 8:
+                    which_sound = random.randint(1,5)
+                    if which_sound == 1:
+                        bass_sound.play()       
+            # Display meme for 2 seconds (NON-BLOCKING)
+                if meme_display_start is not None:
+                    elapsed_time = pygame.time.get_ticks() - meme_display_start
+                    if elapsed_time < 2000:  # 2 seconds
+                        screen.blit(meme1, (500, 200))
+                    else:
+                        meme_display_start = None
+
+            #Code Logic    
+            #----Setting BOUNDARIES FOR THE PLAYER -------------
+                if Player_Alive:                               #-
+                    jetload()                                  #-
+                if player_jetx <= xmin:                        #-
+                    player_jetx = 400                          #-
+                    player_jetvelx = 0                         #- 
+                                                            #-
+                if player_jetx >= xmax:                        #-
+                    player_jetx = 890                          #-
+                    player_jetvelx = 0		                   #-
+                                                            #-
+                if player_jety <= ymin:                        #- 
+                    player_jety = 500                          #-
+                    player_jetvely = 0                         #-
+                                                            #-
+                if player_jety >= ymax:                        #-
+                    player_jety = 620                          #-
+                    player_jetvely = 0                         #-
+            #---------------------------------------------------
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
