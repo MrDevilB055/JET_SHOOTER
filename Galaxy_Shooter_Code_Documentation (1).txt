@@ -1,6 +1,6 @@
 GALAXY SHOOTER CODE DOCUMENTATION
 
-PLAYER SYSTEM
+PLAYER SYSTEM--->
 
   Name                  Type       Purpose
   --------------------- ---------- ---------------------------------
@@ -19,7 +19,7 @@ PLAYER SYSTEM
   jet_pos               Vector2    Stores jet position vector
   Player_Alive          Boolean    Whether player is alive
 
-ENEMY SYSTEM
+ENEMY SYSTEM---->
 
   Name                    Type       Purpose
   ----------------------- ---------- --------------------------------------
@@ -44,7 +44,7 @@ ENEMY SYSTEM
   enemy_target2           Vector2    Boss destination
   generate_sol_pos_x      Boolean    Allows generation of new destination
 
-BULLET SYSTEM
+BULLET SYSTEM---->
 
   Name             Type       Purpose
   ---------------- ---------- ------------------------------
@@ -55,38 +55,38 @@ BULLET SYSTEM
   bullet_surface   Rect       Bullet hitbox
   Shooting         Boolean    Controls bullet firing state
 
-AUDIO SYSTEM
+AUDIO SYSTEM----->
 
 bass_sound, bullet_sound, bullet_hit_sound, get_out, background music
 
-UI / MENU SYSTEM
+UI / MENU SYSTEM---->
 
 Menu_Screen, Level_Screen, Loading_Screen, LoadingScreen, score,
 score_surface, score_surface_rect, pause, pause_surface,
 pause_surface_rect
 
-MAP SYSTEM
+MAP SYSTEM------>
 
 room, milky_way_map, xmin, xmax, ymin, ymax
 
-MEME/TROLL SYSTEM
+MEME/TROLL SYSTEM------>
 
 show_meme, Meme_Display_Time, meme_display_start, meme1
 
-TIMING VARIABLES
+TIMING VARIABLES----->
 
 spawn_timer, spawn_delay, TIME_OF_PLAY, timer
 
-GAME STATE VARIABLES
+GAME STATE VARIABLES----->
 
 MenuLoad, DontLetPlayerWin, enemy_alive, enemy2_alive
 
-FUNCTION LIST
+FUNCTION LIST-->
 
 menuload() - Intended to load main menu useridle() - Intended
 idle-screen system jetload() - Moves and draws player changejet() -
 Moves player with alternate jet sprite roomload() - Draws room
-background sides_image() - Animates side decoration image
+background sides_image() - Animates side decoration image of that hemet guy dancing in bg
 enemy_sol_load() - Enemy 1 AI movement enemy_sol_2() - Duplicate enemy
 movement function enemy_sol_load2() - Boss AI movement milkywayload() -
 Draws Milky Way map loadscore() - Draws score pausebuttonload() - Draws
@@ -94,7 +94,7 @@ quit button nbulletload() - Bullet firing logic
 bulletenemycollission() - Handles bullet damage trollplayer() - Displays
 random memes and sounds
 
-UNUSED VARIABLES
+UNUSED VARIABLES(CONSTANLY EDITING THIS FIELD)
 
 spawn_timer, spawn_delay, timer, DontLetPlayerWin, show_meme,
 Meme_Display_Time, enemy_spawning, Menu_Screen, Level_Screen, jet_pos
@@ -113,9 +113,9 @@ BIGGEST BUGS FOUND
 
 GENERAL ASSESSMENT
 
-Advanced features already implemented: - Smooth acceleration - Friction
+Advanced features already implemented: - Smooth acceleration - Friction so that the player glides with actual physics
 physics - Enemy LERP movement - Collision detection - State variables -
 Random events/memes - Boss enemy system
 
-Recommendation: Convert Player, Enemy, and Bullet systems into classes
-for easier expansion.
+THE CODE IS NOT THE BEST OUT OF ALL BUT IT IS A LITTLE MESSY NEXT GAME IS GOING TO BE EVEN BETTER
+-------> DEVADATHAN VALLOOR MANA.
