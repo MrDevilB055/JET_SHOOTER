@@ -113,6 +113,8 @@ Enemy_Countdown = 0
 Enemy2_Countdown = 0
 EnemyListLVL1 = []
 Menu_Music_start = False
+Enemy_Dead_Sound = pygame.mixer.Sound('Assets/Music/mixkit-retro-game-notification-212.wav')
+Enemy_count = 0
 #------------------------------------------------------------------------------------------------------------------>
 def menuload():
     global MenuLoad, Level, Level_Load,Menu_Music_start
@@ -200,6 +202,8 @@ def sides_image():
     screen.blit(sideimage, (x, 300))
 
 
+    
+
 
 class Enemy:
     def __init__(self, image, x, y, health, speed):
@@ -219,6 +223,7 @@ class Enemy:
             self.health -= 10
             player_obj.shooting = True
         if self.health <= 0:
+            Enemy_Dead_Sound.play()
             self.alive = False
 
     def update(self, player_obj):
@@ -230,7 +235,11 @@ class Enemy:
         if not self.alive:
             return
         screen.blit(self.image, self.rect)
-
+    def LevelOver(self):
+            if self.alive == False and Enemy_count == len(EnemyListLVL1):
+                pygame.quit()
+                exit()
+                
 enemy1 = Enemy(enemysol, 500, 300, 100, 0.1)
 enemy2 = Enemy(enemysol2, 700, 350, 80, 0.05)
 enemy3 = Enemy(enemysol, 500, 300, 100, 0.1)
@@ -379,9 +388,11 @@ while True:
             
             for enemy in EnemyListLVL1:
                 enemy.update(player)  # Passing player instance explicitly
+                enemy.LevelOver()
                 
             player.update()
             player.update_bullet(screen)
+           
             
             if meme_display_start is not None and meme1 is not None:
                 elapsed_time = pygame.time.get_ticks() - meme_display_start
