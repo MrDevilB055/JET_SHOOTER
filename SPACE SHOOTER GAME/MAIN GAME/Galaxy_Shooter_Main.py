@@ -1,9 +1,12 @@
 import pygame
 import random
 import pickle
+from datetime import datetime
 import sys
 pygame.mixer.init()
 pygame.init()
+
+name = input("Enter <player> name")
 
 # NO AI HAS BEEN USED TO MAKE THIS GAME AND WAS COMPLETELY MADE BY DEVADATHAN VALLOOR ONLY IDEAS OF THEME WAS TAKEN FROM AI ALL CODING ETC AND GAME DESIGN IS DONE WITHOUT IT
 screen = pygame.display.set_mode((1920, 1080))  # Fixed window dimensions tuple
@@ -13,9 +16,17 @@ pygame.display.set_caption("Galaxy Shooter")
 # PLAYER DEFINITIONS
 #THINGS LEFT TO DO IS SET SCORE TO GET DISPLAYED AND READ AND WRITE INTO THE FILE
 #need to put the score position properly
-#
-
-
+#use flush 
+Player_Score = 0
+User_log = open(r'user_data.txt','a+')
+#initialising file for reading and writing this is a dummy file the real file is called <THE PLAYER SCORES>
+if name in User_log:
+    pass
+else:
+    User_log.write(name)
+    User_log.write(f"player_score is {Player_Score}{datetime.now()}\n")
+    
+    
 Level = ''
 UserEvedeya = pygame.image.load('Assets/Map_Asset/WHERE ARE YOU USER.png')
 User_Evedeya = pygame.transform.scale(UserEvedeya, (1920, 1080))
@@ -163,24 +174,28 @@ def LevelLoad():
                         bullet_speed_acc_level = 80
                         EnemyListLVL1 = [enemy1, enemy2, enemy3]
                         Enemy_count = 3
+                        User_log.write(f"{Level} ---> {datetime.now()}\n")
                     elif event.key == pygame.K_2:
                         Level = 2
                         bullet_speed_acc_level  = 60
                         pygame.mixer.music.load('Assets/Music/[FREE] Egyptian Swag x 2000s Type Beat - PYRAMIDS.mp3')
                         EnemyListLVL1 = [enemy1, enemy2, enemy3,enemy4]
                         Enemy_count = 4
+                        User_log.write(f"{Level} ---> {datetime.now()}\n")
                     elif event.key == pygame.K_3:
                         Level = 3
                         pygame.mixer.music.load('Assets/Music/[FREE] FREDDIE DREDD x 1NONLY TYPE BEAT - CASKET.mp3')
                         bullet_speed_acc_level  = 55
                         EnemyListLVL1 = [enemy1, enemy2, enemy3,enemy4,enemy5,enemy6]
                         Enemy_count = 6
+                        User_log.write(f"{Level} ---> {datetime.now()}\n")
                     elif event.key == pygame.K_4:
                         Level = 4
                         pygame.mixer.music.load(r"Assets/Music/THE WORLD'S BEAUTIFUL END.mp3")
                         bullet_speed_acc_level  = 50
                         EnemyListLVL1 = [enemy1, enemy2, enemy3,enemy4,enemy5,enemy6,enemy7,enemy8]
                         Enemy_count = 8
+                        User_log.write(f"{Level} ---> {datetime.now()}\n")
                     pygame.mixer.music.play(-1)
                     return
 
