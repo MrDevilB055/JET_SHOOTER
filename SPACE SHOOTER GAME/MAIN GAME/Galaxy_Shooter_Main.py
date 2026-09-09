@@ -23,7 +23,7 @@ User_log = open(r'user_data.txt','a+')
 if name in User_log:
     pass
 else:
-    User_log.write(name)
+    User_log.write(f"{name}\n")
     User_log.write(f"player_score is {Player_Score}{datetime.now()}\n")
     
     
@@ -59,7 +59,7 @@ milky_way_map = pygame.image.load('Assets/Map_Asset/MilkyWayMap.png').convert_al
 
 score_font = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 30)
 score_surface = score_font.render('SCORE :', True, 'White')
-score_label_rect = score_surface.get_rect(topleft=(1300, 0))
+score_label_rect = score_surface.get_rect(topleft=(80,300))
 pause = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 30)
 pause_surface1 = pause.render('-->PAUSE<--', True, 'White')
 pause_surface_rect1 = pause_surface1.get_rect(topleft=(1330, 19))
@@ -98,7 +98,7 @@ score_num_rect = score_value_surface.get_rect(topleft=(1450, 8))
 quit_font = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 30)
 quit_surface = pause.render('-->QUIT<--', True, 'White')
 quit_surface_rect = quit_surface.get_rect(topleft=(1330, 19))
-
+Player_hitsound = pygame.mixer.Sound('Assets/Music/PlayerHit.mp3')
 # BULLETS AND ADDONS
 bulletog = pygame.image.load('Assets/Map_Asset/bullet.png')
 bullet = pygame.transform.scale(bulletog, (20, 20))
@@ -243,6 +243,9 @@ class Enemy:
         
         #enemy_bullet_attributes
         self.bullet_image = bullet
+        self.bullet_x = x
+        self.bullet_y = y
+        
         
     def bulletenemycollision(self, player_obj):
         global Score
@@ -250,6 +253,7 @@ class Enemy:
             return
         if self.rect.colliderect(player_obj.bullet_rect):
             Score+=10
+            User_log.write(f"\t{Score} and {Level}\n")
             bullet_hit_sound.play()
             self.health -= 10
             player_obj.shooting = True
@@ -257,8 +261,37 @@ class Enemy:
             Enemy_Dead_Sound.play()
             self.alive = False
             self.shooting = False
+            self.bullet_rect = self.bullet_image.get_rect(center=(self.bullet_x, self.bullet_y))
             
-#need to add enemybulllt by taking the reference of player class ()
+    def update_bullet(self,screen_surface,player_obj):
+        # If waiting to shoot, stick to the enemy's current position
+        if self.shooting:
+            self.bullet_x = self.pos.x
+            self.bullet_y = self.pos.y
+            self.bullet_rect = self.bullet_image.get_rect(center=(self.bullet_x, self.bullet_y))
+            
+            # Random chance to fire a bullet 
+            if random.randint(0, 100) == 1:
+                self.shooting = False
+                Player_hitsound.play()
+                # enemy_shoot_sound.play() # Optional sound effect here
+        else:
+            # Move bullet downward toward the player
+            self.bullet_y += 6
+            self.bullet_rect = self.bullet_image.get_rect(center=(self.bullet_x, self.bullet_y))
+            
+            # Check if the enemy's bullet hits the player
+            if self.bullet_rect.colliderect(player_obj.rect):
+                
+                player_obj.health -= 10
+                bullet_hit_sound.play() # Or player hit sound
+                self.shooting = True # Reset bullet
+            
+            # Reset bullet if it goes off the bottom of the screen (e.g., y > 750)
+            if self.bullet_y >= 750:
+                self.shooting = True
+                
+        screen_surface.blit(self.bullet_image, self.bullet_rect)
 
     def update(self, player_obj):
         if random.randint(0, 120) == 1:
@@ -266,9 +299,11 @@ class Enemy:
         self.pos = self.pos.lerp(self.target, self.speed)
         self.bulletenemycollision(player_obj)
         self.rect = self.image.get_rect(center=self.pos)
+        
         if not self.alive:
             return
         screen.blit(self.image, self.rect)
+        self.update_bullet(screen,player_obj)
     def LevelOver(self):
         if not self.alive :
             pygame.quit()
