@@ -82,6 +82,7 @@ enemysol = pygame.transform.scale(enemy_sol, (40, 40))
 enemy_pos = pygame.Vector2(sol_pos_x, sol_pos_y)
 enemy_target = pygame.Vector2(sol_pos_x, sol_pos_y)
 spawn_timer = 0
+#Enemy_Dead_Screen = pygame.image.load()
 spawn_delay = 2000
 generate_sol_pos_x = True
 enemy_spawning = True
@@ -306,6 +307,7 @@ class Enemy:
         self.update_bullet(screen,player_obj)
     def LevelOver(self):
         if not self.alive :
+           #screen.blit()
             pygame.quit()
             sys.exit()
                 
