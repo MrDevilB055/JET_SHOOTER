@@ -590,3 +590,73 @@ player_score is 02026-09-11 08:14:30.877652
 	130 and 4
 	140 and 4
 	150 and 4
+devadathan
+player_score is 02026-09-16 09:16:03.721734
+dev
+player_score is 02026-09-16 09:17:39.358269
+dev
+player_score is 02026-09-16 09:17:58.483617
+dev
+player_score is 02026-09-16 09:18:43.597045
+dev
+player_score is 02026-09-16 09:19:25.449663
+2 ---> 2026-09-16 09:19:28.301260
+	10 and 2
+	20 and 2
+	30 and 2
+	40 and 2
+	50 and 2
+	60 and 2
+	70 and 2
+	80 and 2
+dev
+player_score is 02026-09-16 09:21:27.151112
+3 ---> 2026-09-16 09:21:30.448194
+	10 and 3
+	20 and 3
+	30 and 3
+	40 and 3
+	50 and 3
+	60 and 3
+	70 and 3
+	80 and 3
+	90 and 3
+	100 and 3
+	110 and 3
+	120 and 3
+	130 and 3
+dev
+player_score is 02026-09-16 09:25:48.050433
+3 ---> 2026-09-16 09:25:50.176711
+	10 and 3
+	20 and 3
+	30 and 3
+	40 and 3
+	50 and 3
+	60 and 3
+	70 and 3
+	80 and 3
+	90 and 3
+	100 and 3
+	110 and 3
+	120 and 3
+	130 and 3
+	140 and 3
+	150 and 3
+	160 and 3
+	170 and 3
+	180 and 3
+	190 and 3
+dev
+player_score is 02026-09-16 09:26:41.735475
+dev
+player_score is 02026-09-16 09:28:52.705689
+3 ---> 2026-09-16 09:29:11.154458
+	10 and 3
+	20 and 3
+	30 and 3
+	40 and 3
+	50 and 3
+	60 and 3
+	70 and 3
+	80 and 3

@@ -70,6 +70,7 @@ Meme_Display_Time = pygame.time.get_ticks()
 # ENEMY SOLDIER DEFINITIONS
 enemy_sol = pygame.image.load('Assets/Map_Asset/enemysoldier.png').convert_alpha()
 enemy_sol2 = pygame.image.load('Assets/Map_Asset/final_boss.png').convert_alpha()
+#death_screen = pygame.image.load("Assets/Map_Asset/wp3057568-blue-screen-wallpaper.jpg").convert_alpha()
 sol_pos_x = random.randint(353, 984)            
 sol_pos_y = random.randint(250, 471)            
 sol_pos_x2 = random.randint(353, 984)            
@@ -295,6 +296,7 @@ class Enemy:
         screen_surface.blit(self.bullet_image, self.bullet_rect)
 
     def update(self, player_obj):
+        global menuload
         if random.randint(0, 120) == 1:
             self.target = pygame.Vector2(random.randint(353, 984), random.randint(250, 471))
         self.pos = self.pos.lerp(self.target, self.speed)
@@ -307,9 +309,12 @@ class Enemy:
         self.update_bullet(screen,player_obj)
     def LevelOver(self):
         if not self.alive :
-           #screen.blit()
-            pygame.quit()
-            sys.exit()
+            menuload = True
+            Level_Load = False
+            screen.blit(death_screen,(0,0))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.quit()
+                sys.exit()
                 
 enemy1 = Enemy(enemysol, 500, 300, 100, 0.1)
 enemy2 = Enemy(enemysol2, 700, 350, 80, 0.05)
@@ -495,6 +500,7 @@ while True:
                 if quit_surface_rect.collidepoint(event.pos):
                     pygame.quit()
                     exit() 
+                
             if event.type == pygame.MOUSEBUTTONDOWN:
                 click = pygame.mixer.Sound('Assets/Music/soundreality-sound-of-mouse-click-4-478760.mp3')
                 click.play()
