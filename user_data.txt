@@ -1,1 +1,53 @@
 player score = 0
+Succesfully updated user details to the sql tabledevadathan
+player_score is 02026-09-18 08:45:54.845469
+Succesfully updated user details to the sql tabledevadathan
+player_score is 02026-09-18 08:46:42.380963
+2 ---> 2026-09-18 08:46:45.771475
+Succesfully updated user details to the sql tableDev
+player_score is 02026-09-18 08:54:50.753186
+3 ---> 2026-09-18 08:54:56.431165
+Succesfully updated user details to the sql tableDevadathan
+player_score is 02026-09-18 08:55:41.104366
+3 ---> 2026-09-18 08:56:15.749859
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+Succesfully updated user details to the sql tableDeepan
+player_score is 02026-09-18 09:01:29.589021
+3 ---> 2026-09-18 09:01:33.401728
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+Succesfully updated user details to the sql tableramu
+player_score is 02026-09-18 09:04:38.133562
+4 ---> 2026-09-18 09:04:40.672356
+	0 and 4
+	0 and 4
