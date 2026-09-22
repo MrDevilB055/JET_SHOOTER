@@ -3,26 +3,45 @@ import random
 import pickle
 from datetime import datetime
 import sys
-import mysql.connector
+#import mysql.connector
 pygame.mixer.init()
 pygame.init()
 
-
+python_where = sys.executable
 Player_Score = 0
 User_log = open(r'user_data.txt','a+')
-mycon = mysql.connector.connect(host="localhost",user="root",database="JetShooter",password="password")
+print("Press 1 to normally boot into game")
+print("Press 2 to run the mysql command to check the tables and then boot into the game")
+Game_State = int(input("Enter the mode of the game (1/2)"))
+
+#mycon = mysql.connector.connect(host="localhost",user="root",database="JetShooter",password="password")
+'''
+if mycon.is_connected():
+    print("Succesfully connected to database")
+else:
+    print("Having problems connecting to table check mysql installation again")
 cursor = mycon.cursor()
 name = input("Enter <player> name")
+#code used to check weather the table called jet shooter exists or not
+
+try:
+    query = "Show Tables Like JetShooter"
+    cursor.execute(query)
+except mysql.connector.Error as err:
+    query = "Create table Jetshooter"
+    cursor.execute(query)
+
 if name in User_log:
     pass
 else:
     query = " Insert into playerscore (PlayerName) Values(%s)"
     cursor.execute(query,(name,))
     mycon.commit()
+    User_log.write("Python is running in",python_where)
     User_log.write("Succesfully updated user details to the sql table")
     User_log.write(f"{name}\n")
     User_log.write(f"player_score is {Player_Score}{datetime.now()}\n")
-
+'''
 # NO AI HAS BEEN USED TO MAKE THIS GAME AND WAS COMPLETELY MADE BY DEVADATHAN VALLOOR ONLY IDEAS OF THEME WAS TAKEN FROM AI ALL CODING ETC AND GAME DESIGN IS DONE WITHOUT IT
 screen = pygame.display.set_mode((1920, 1080))  # Fixed window dimensions tuple
 clock = pygame.time.Clock()
@@ -60,6 +79,7 @@ sideimage = pygame.transform.scale(side_image, (900, 700))
 # MAP ATMOSPHERE DEFINITIONS AND ROOM DEFINITIONS
 bass_sound = pygame.mixer.Sound('Assets/Music/brvhrtz-stab-f-01-brvhrtz-224599.mp3')
 room = pygame.image.load('Assets/Map_Asset/Map1.jpg').convert()
+Room = pygame.transform.scale(room,(1920,1080))
 room2 = pygame.image.load('Assets/Map_Asset/Map2.jpg')
 Room2 = pygame.transform.scale(room2, (1920, 1080)) 
 milky_way_map = pygame.image.load('Assets/Map_Asset/MilkyWayMap.png').convert_alpha()
@@ -77,7 +97,8 @@ Meme_Display_Time = pygame.time.get_ticks()
 # ENEMY SOLDIER DEFINITIONS
 enemy_sol = pygame.image.load('Assets/Map_Asset/enemysoldier.png').convert_alpha()
 enemy_sol2 = pygame.image.load('Assets/Map_Asset/final_boss.png').convert_alpha()
-#death_screen = pygame.image.load("Assets/Map_Asset/wp3057568-blue-screen-wallpaper.jpg").convert_alpha()
+Death_screen = pygame.image.load('Assets/Map_Asset/DeadScreen.jpg').convert_alpha()
+death_screen = pygame.transform.scale(Death_screen,(1920,1080))
 sol_pos_x = random.randint(353, 984)            
 sol_pos_y = random.randint(250, 471)            
 sol_pos_x2 = random.randint(353, 984)            
@@ -140,6 +161,7 @@ Enemy2_Countdown = 0
 EnemyListLVL1 = []
 Menu_Music_start = False
 Enemy_Dead_Sound = pygame.mixer.Sound('Assets/Music/mixkit-retro-game-notification-212.wav')
+Player_Dead_Sound = pygame.mixer.Sound('Assets/Music/you-died-deep-monster-voice-tomas-herudek-1-1-00-03.mp3')
 Enemy_count = 0
 #------------------------------------------------------------------------------------------------------------------>
 def menuload():
@@ -221,7 +243,7 @@ def useridle():
     return False
     
 def roomload():
-    if Level == 1: screen.blit(room, (0, 0))
+    if Level == 1: screen.blit(Room, (0, 0))
     elif Level == 2: screen.blit(Room2, (0, 0))
     elif Level == 3: screen.blit(room3, (0, 0))
     elif Level == 4: screen.blit(room4, (0, 0))
@@ -234,10 +256,6 @@ def sides_image():
         target_x = 1200 + 20
     x += (target_x - x) * 0.1   
     screen.blit(sideimage, (x, 300))
-
-
-    
-
 
 class Enemy:
     def __init__(self, image, x, y, health, speed):
@@ -309,20 +327,9 @@ class Enemy:
         self.pos = self.pos.lerp(self.target, self.speed)
         self.bulletenemycollision(player_obj)
         self.rect = self.image.get_rect(center=self.pos)
-        
-        if not self.alive:
-            return
         screen.blit(self.image, self.rect)
         self.update_bullet(screen,player_obj)
-    def LevelOver(self):
-        if not self.alive :
-            query = ""
-            menuload = True
-            Level_Load = False
-#            screen.blit(death_screen,(0,0))
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.quit()
-                sys.exit()
+ 
                 
 enemy1 = Enemy(enemysol, 500, 300, 100, 0.1)
 enemy2 = Enemy(enemysol2, 700, 350, 80, 0.05)
@@ -353,6 +360,7 @@ class Player:
         self.bullet_rect = self.bullet_image.get_rect(center=(self.bullet_x, self.bullet_y))
 
     def update(self):
+        global Level_Load ,Menuload
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.vel_x -= self.acc     
@@ -386,11 +394,22 @@ class Player:
         if self.health > 0:
             screen.blit(self.image, self.rect)
         else:
-            query = " Insert into playerscore (PlayerScore) Values(%s)"
-            cursor.execute(query,(Player_Score,))
-            mycon.commit()
-            pygame.quit()
-            exit()
+            screen.blit(death_screen, (0, 0))
+            
+            if Level_Load == True: 
+                Menuload = True
+                Level_Load = False  
+                
+                pygame.mixer.stop()
+                Player_Dead_Sound.play()  
+                query = " Insert into playerscore (PlayerScore) Values(%s)"
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print("Inside mousebutton check - Exiting Game")
+                pygame.quit()
+                sys.exit()
+
+
 
     def update_bullet(self, screen_surface):
         if self.shooting :   
@@ -463,6 +482,83 @@ def trollplayer():
                 pass  # Handles missing assets silently if needed
 
 Last_input_time = pygame.time.get_ticks()
+
+
+#This code is for the mysql part to check,update and all
+def update_game_data(table_name, player_name, new_score):
+    
+    
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Vehicle123",  
+        database="your_database_name" 
+    )
+    cursor = db.cursor()
+    query = f"UPDATE {table_name} SET score = %s WHERE player_name = %s"
+    values = (new_score, player_name)
+
+    
+    cursor.execute(query, values)
+    db.commit()
+
+def delete_player(table_name, player_name):
+    
+    
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Vehicle123", 
+        database="your_database_name"  
+    )
+    cursor = db.cursor()
+
+    query = f"DELETE FROM {table_name} WHERE player_name = %s"
+    
+    # 3. Execute and commit
+    cursor.execute(query, (player_name,))
+    db.commit()
+    
+
+
+def insert_player_data(table_name, player_name, score, level):
+    
+    # 1. Establish the connection
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Vehicle123",  # Your MySQL password
+        database="your_database_name"
+    )
+    cursor = db.cursor()
+
+    # 2. Construct the INSERT query
+    # Provide the columns in the first set of parentheses, and placeholders in the second
+    query = f"INSERT INTO {table_name} (player_name, score, level) VALUES (%s, %s, %s)"
+    values = (player_name, score, level)
+    
+    # 3. Execute and commit to database
+    cursor.execute(query, values)
+    db.commit()
+        
+
+
+if Game_State == 2:
+    print("1-->UPDATE GAME DATA")
+    print("2-->DELETE A PLAYER DATA")
+    print("3-->INSERT PLAYER DATA")
+    print("4-->I CLICKED BY MISTAKE TAKE ME BACK TO THE GAME :(  ")
+    choice = int(input("Enter your choice: "))
+    if choice==1:
+        update_game_data
+    if choice==2:
+        delete_player
+    if choice==3:
+        insert_player_data
+    if choice==4:
+        Game_State = 1
+        
+
 
 # MAIN GAME LOOP
 while True:
