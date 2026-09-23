@@ -212,3 +212,30 @@ player_score is 02026-09-18 09:04:38.133562
 	0 and 4
 	0 and 4
 	0 and 4
+3 ---> 2026-09-23 12:56:22.842366
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+	0 and 3
+Successfully updated user details to the sql table
+dev
+player_score is 0 at 2026-09-23 13:20:55.951632
+Successfully updated user details to the sql table
+deepan
+player_score is 0 at 2026-09-23 13:22:09.965847
+Successfully updated user details to the sql table
+harry
+player_score is 0 at 2026-09-23 13:26:57.646853
+Successfully updated user details to the sql table
+dev
+player_score is 0 at 2026-09-23 13:39:09.091538
+Successfully updated user details to the sql table
+gary
+player_score is 0 at 2026-09-23 13:39:47.214607
+Successfully updated user details to the sql table
+gohan
+player_score is 0 at 2026-09-23 13:40:37.871628
+Successfully updated user details to the sql table
+hello
+player_score is 0 at 2026-09-23 13:44:10.782884

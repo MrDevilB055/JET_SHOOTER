@@ -2,6 +2,7 @@ import pygame
 import random
 import pickle
 from datetime import datetime
+import mysql.connector
 import sys
 #import mysql.connector
 pygame.mixer.init()
@@ -14,8 +15,8 @@ print("Press 1 to normally boot into game")
 print("Press 2 to run the mysql command to check the tables and then boot into the game")
 Game_State = int(input("Enter the mode of the game (1/2)"))
 
-#mycon = mysql.connector.connect(host="localhost",user="root",database="JetShooter",password="password")
-'''
+mycon = mysql.connector.connect(host="localhost",user="root",database="JetShooter",password="password")
+
 if mycon.is_connected():
     print("Succesfully connected to database")
 else:
@@ -24,24 +25,32 @@ cursor = mycon.cursor()
 name = input("Enter <player> name")
 #code used to check weather the table called jet shooter exists or not
 
-try:
-    query = "Show Tables Like JetShooter"
-    cursor.execute(query)
-except mysql.connector.Error as err:
-    query = "Create table Jetshooter"
+
+# 1. Look for the table safely by wrapping the pattern in single quotes
+query = "SHOW TABLES LIKE 'PlayerScore';"
+cursor.execute(query)
+
+# 2. Fetch the result block
+table_exists = cursor.fetchone()
+
+
+if not table_exists:
+    query = "CREATE TABLE IF NOT EXISTS playerscore (player_name VARCHAR(255) PRIMARY KEY, score INT, level INT);"
     cursor.execute(query)
 
 if name in User_log:
     pass
 else:
-    query = " Insert into playerscore (PlayerName) Values(%s)"
-    cursor.execute(query,(name,))
-    mycon.commit()
-    User_log.write("Python is running in",python_where)
-    User_log.write("Succesfully updated user details to the sql table")
+    query = "INSERT INTO playerscore (player_name, score, level) VALUES (%s, %s, %s)"
+    cursor.execute(query, (name, 0, 0))
+    mycon.commit()  
+    
+    # 4. Handle clean file logging output updates
+    User_log.write("Successfully updated user details to the sql table\n")
     User_log.write(f"{name}\n")
-    User_log.write(f"player_score is {Player_Score}{datetime.now()}\n")
-'''
+    User_log.write(f"player_score is {Player_Score} at {datetime.now()}\n")
+
+
 # NO AI HAS BEEN USED TO MAKE THIS GAME AND WAS COMPLETELY MADE BY DEVADATHAN VALLOOR ONLY IDEAS OF THEME WAS TAKEN FROM AI ALL CODING ETC AND GAME DESIGN IS DONE WITHOUT IT
 screen = pygame.display.set_mode((1920, 1080))  # Fixed window dimensions tuple
 clock = pygame.time.Clock()
@@ -505,19 +514,19 @@ def update_game_data(table_name, player_name, new_score):
 def delete_player(table_name, player_name):
     
     
-    db = mysql.connector.connect(
+    mycon = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="Vehicle123", 
-        database="your_database_name"  
+        password="password", 
+        database="JetShooter"  
     )
-    cursor = db.cursor()
+    cursor = mycon.cursor()
 
     query = f"DELETE FROM {table_name} WHERE player_name = %s"
     
     # 3. Execute and commit
     cursor.execute(query, (player_name,))
-    db.commit()
+    mycon.commit()
     
 
 
@@ -550,11 +559,20 @@ if Game_State == 2:
     print("4-->I CLICKED BY MISTAKE TAKE ME BACK TO THE GAME :(  ")
     choice = int(input("Enter your choice: "))
     if choice==1:
-        update_game_data
+        table_name = input("Enter the table name")
+        player_name = input("Enter the player name you want to update")
+        new_score = int(input("Enter the new score that you want"))
+        update_game_data(table_name, player_name, new_score)
     if choice==2:
-        delete_player
+        table_name = input("Enter the table name")
+        player_name = input("Enter the player name you want to update")
+        delete_player(table_name, player_name)
     if choice==3:
-        insert_player_data
+        table_name = input("Enter the table name")
+        player_name = input("Enter the player name you want to update")
+        new_score = int(input("Enter the new score that you want"))
+        level = int(input("Enter the new level for this player"))
+        insert_player_data(table_name, player_name, new_score, level)
     if choice==4:
         Game_State = 1
         
