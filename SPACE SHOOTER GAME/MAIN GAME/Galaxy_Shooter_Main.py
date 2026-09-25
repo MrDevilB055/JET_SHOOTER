@@ -1,20 +1,27 @@
+from pathlib import Path
 import pygame
 import random
 import pickle
 from datetime import datetime
-import mysql.connector
+#import mysql.connector
 import sys
+
+# Anchor the base directory to this script's folder
+BASE_DIR = Path(__file__).resolve().parent
+# Point to the Assets folder two levels up
+ASSETS_DIR = BASE_DIR.parent.parent / 'Assets'
+
 #import mysql.connector
 pygame.mixer.init()
 pygame.init()
 
 python_where = sys.executable
 Player_Score = 0
-User_log = open(r'user_data.txt','a+')
+User_log = open(BASE_DIR / 'user_data.txt','a+')
 print("Press 1 to normally boot into game")
 print("Press 2 to run the mysql command to check the tables and then boot into the game")
 Game_State = int(input("Enter the mode of the game (1/2)"))
-
+'''
 mycon = mysql.connector.connect(host="localhost",user="root",database="JetShooter",password="password")
 
 if mycon.is_connected():
@@ -49,7 +56,7 @@ else:
     User_log.write("Successfully updated user details to the sql table\n")
     User_log.write(f"{name}\n")
     User_log.write(f"player_score is {Player_Score} at {datetime.now()}\n")
-
+'''
 
 # NO AI HAS BEEN USED TO MAKE THIS GAME AND WAS COMPLETELY MADE BY DEVADATHAN VALLOOR ONLY IDEAS OF THEME WAS TAKEN FROM AI ALL CODING ETC AND GAME DESIGN IS DONE WITHOUT IT
 screen = pygame.display.set_mode((1920, 1080))  # Fixed window dimensions tuple
@@ -64,15 +71,15 @@ pygame.display.set_caption("Galaxy Shooter")
 #initialising file for reading and writing this is a dummy file the real file is called <THE PLAYER SCORES>
     
 Level = ''
-UserEvedeya = pygame.image.load('Assets/Map_Asset/WHERE ARE YOU USER.png')
+UserEvedeya = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'WHERE ARE YOU USER.png')
 User_Evedeya = pygame.transform.scale(UserEvedeya, (1920, 1080))
-Menu_Screen = pygame.image.load('Assets/Map_Asset/GALAXY SHOOTER.png')
+Menu_Screen = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'GALAXY SHOOTER.png')
 MenuScreen = pygame.transform.scale(Menu_Screen, (1920, 1080))
-Level_Screen = pygame.image.load('Assets/Map_Asset/GALAXY SHOOTER GAME.png')
-Loading_Screen = pygame.image.load('Assets/Map_Asset/ChatGPT Image May 2, 2026, 12_01_35 AM.png')
+Level_Screen = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'GALAXY SHOOTER GAME.png')
+Loading_Screen = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'ChatGPT Image May 2, 2026, 12_01_35 AM.png')
 LoadingScreen = pygame.transform.scale(Loading_Screen, (1920, 1100))
 
-player_jet = pygame.image.load('Assets/Map_Asset/player_jet.png').convert_alpha()
+player_jet = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'player_jet.png').convert_alpha()
 playerjet = pygame.transform.scale(player_jet,(120,120))
 player_jet2 = ''
 playerjet2 = ''
@@ -82,21 +89,21 @@ playerjet3 = ''
 Enemy_Soldier_Health = 100
 Enemy_Soldier2_Health = 100
 
-side_image = pygame.image.load('Assets/Map_Asset/ChatGPT Image May 1, 2026, 11_06_22 PM.png').convert_alpha()
+side_image = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'ChatGPT Image May 1, 2026, 11_06_22 PM.png').convert_alpha()
 sideimage = pygame.transform.scale(side_image, (900, 700))
 
 # MAP ATMOSPHERE DEFINITIONS AND ROOM DEFINITIONS
-bass_sound = pygame.mixer.Sound('Assets/Music/brvhrtz-stab-f-01-brvhrtz-224599.mp3')
-room = pygame.image.load('Assets/Map_Asset/Map1.jpg').convert()
+bass_sound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'brvhrtz-stab-f-01-brvhrtz-224599.mp3')
+room = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'Map1.jpg').convert()
 Room = pygame.transform.scale(room,(1920,1080))
-room2 = pygame.image.load('Assets/Map_Asset/Map2.jpg')
+room2 = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'Map2.jpg')
 Room2 = pygame.transform.scale(room2, (1920, 1080)) 
-milky_way_map = pygame.image.load('Assets/Map_Asset/MilkyWayMap.png').convert_alpha()
+milky_way_map = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'MilkyWayMap.png').convert_alpha()
 
-score_font = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 30)
+score_font = pygame.font.Font(ASSETS_DIR / 'Fonts' / 'splatink_2' / 'Splatink_PERSONAL_USE_ONLY.otf', 30)
 score_surface = score_font.render('SCORE :', True, 'White')
 score_label_rect = score_surface.get_rect(topleft=(80,300))
-pause = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 30)
+pause = pygame.font.Font(ASSETS_DIR / 'Fonts' / 'splatink_2' / 'Splatink_PERSONAL_USE_ONLY.otf', 30)
 pause_surface1 = pause.render('-->PAUSE<--', True, 'White')
 pause_surface_rect1 = pause_surface1.get_rect(topleft=(1330, 19))
 
@@ -104,9 +111,9 @@ show_meme = True
 Meme_Display_Time = pygame.time.get_ticks()  
 
 # ENEMY SOLDIER DEFINITIONS
-enemy_sol = pygame.image.load('Assets/Map_Asset/enemysoldier.png').convert_alpha()
-enemy_sol2 = pygame.image.load('Assets/Map_Asset/final_boss.png').convert_alpha()
-Death_screen = pygame.image.load('Assets/Map_Asset/DeadScreen.jpg').convert_alpha()
+enemy_sol = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'enemysoldier.png').convert_alpha()
+enemy_sol2 = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'final_boss.png').convert_alpha()
+Death_screen = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'DeadScreen.jpg').convert_alpha()
 death_screen = pygame.transform.scale(Death_screen,(1920,1080))
 sol_pos_x = random.randint(353, 984)            
 sol_pos_y = random.randint(250, 471)            
@@ -130,31 +137,31 @@ target_x = 1200
 enemy_pos2 = pygame.Vector2(sol_pos_x2, sol_pos_y2)
 enemy_target2 = pygame.Vector2(sol_pos_x2, sol_pos_y2)
 Score = 0
-score_value = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 20)
+score_value = pygame.font.Font(ASSETS_DIR / 'Fonts' / 'splatink_2' / 'Splatink_PERSONAL_USE_ONLY.otf', 20)
 score_value_surface = score_value.render(str(Score), True, 'White')
 score_num_rect = score_value_surface.get_rect(topleft=(1450, 8))
 
-quit_font = pygame.font.Font('Assets/Fonts/splatink_2/Splatink_PERSONAL_USE_ONLY.otf', 30)
+quit_font = pygame.font.Font(ASSETS_DIR / 'Fonts' / 'splatink_2' / 'Splatink_PERSONAL_USE_ONLY.otf', 30)
 quit_surface = pause.render('-->QUIT<--', True, 'White')
 quit_surface_rect = quit_surface.get_rect(topleft=(1330, 19))
-Player_hitsound = pygame.mixer.Sound('Assets/Music/PlayerHit.mp3')
+Player_hitsound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'PlayerHit.mp3')
 # BULLETS AND ADDONS
-bulletog = pygame.image.load('Assets/Map_Asset/bullet.png')
+bulletog = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'bullet.png')
 bullet = pygame.transform.scale(bulletog, (20, 20))
-bullet_sound = pygame.mixer.Sound('Assets/Music/NormalShot.mp3')
-get_out = pygame.mixer.Sound('Assets/Meme_Sounds/tuco-get-out.mp3')
-bullet_hit_sound = pygame.mixer.Sound('Assets/Music/mixkit-video-game-blood-pop-2361.wav')
-menu_start = pygame.mixer.Sound('Assets/Music/van_wiese-bass-ui-298402.mp3')
+bullet_sound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'NormalShot.mp3')
+get_out = pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'tuco-get-out.mp3')
+bullet_hit_sound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'mixkit-video-game-blood-pop-2361.wav')
+menu_start = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'van_wiese-bass-ui-298402.mp3')
 # Fixed empty room syntax errors - set duplicates as fallbacks
-room_3 = pygame.image.load('Assets/Map_Asset/Map3.jpg') 
+room_3 = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'Map3.jpg') 
 room3 = pygame.transform.scale(room_3,(1920,1080))
-room_4 = pygame.image.load('Assets\Map_Asset\Map4.jpg')
+room_4 = pygame.image.load(ASSETS_DIR / 'Map_Asset' / 'Map4.jpg')
 room4 = pygame.transform.scale(room_4,(1920,1080))
 bullet_speed_acc_level = 0
 Time = 0
 NoOfEnemies = 0
 meme_display_start = None
-start_sound = pygame.mixer.Sound('Assets/Music/mixkit-retro-game-notification-212.wav')
+start_sound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'mixkit-retro-game-notification-212.wav')
 meme1 = None
 keys = pygame.key.get_pressed()
 xmin, xmax = 400, 900                                        
@@ -169,15 +176,15 @@ Enemy_Countdown = 0
 Enemy2_Countdown = 0
 EnemyListLVL1 = []
 Menu_Music_start = False
-Enemy_Dead_Sound = pygame.mixer.Sound('Assets/Music/mixkit-retro-game-notification-212.wav')
-Player_Dead_Sound = pygame.mixer.Sound('Assets/Music/you-died-deep-monster-voice-tomas-herudek-1-1-00-03.mp3')
+Enemy_Dead_Sound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'mixkit-retro-game-notification-212.wav')
+Player_Dead_Sound = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'you-died-deep-monster-voice-tomas-herudek-1-1-00-03.mp3')
 Enemy_count = 0
 #------------------------------------------------------------------------------------------------------------------>
 def menuload():
     global MenuLoad, Level, Level_Load,Menu_Music_start
     if MenuLoad:
         if not Menu_Music_start :
-            pygame.mixer.music.load('Assets/Music/Menu_Music.mp3')
+            pygame.mixer.music.load(ASSETS_DIR / 'Music' / 'Menu_Music.mp3')
             pygame.mixer.music.play(-1)
             Menu_Music_start = True
        #HOW THIS CODE WORKS IS THAT FIRST IT CHECK WEATHER MENUMUSIC IS FALSE AND IT IS FALSE SO NOW THE MUSIC IS INTIALISED ONCE THE MUSIC IS INTIALISED WE DONT WANT TO TOUCH IT
@@ -210,7 +217,7 @@ def LevelLoad():
                     StartGame = True
                     if event.key == pygame.K_1:
                         Level = 1
-                        pygame.mixer.music.load('Assets/Music/turbo-cup-chase_pgBeN5O9.mp3')
+                        pygame.mixer.music.load(ASSETS_DIR / 'Music' / 'turbo-cup-chase_pgBeN5O9.mp3')
                         bullet_speed_acc_level = 80
                         EnemyListLVL1 = [enemy1, enemy2, enemy3]
                         Enemy_count = 3
@@ -218,20 +225,20 @@ def LevelLoad():
                     elif event.key == pygame.K_2:
                         Level = 2
                         bullet_speed_acc_level  = 60
-                        pygame.mixer.music.load('Assets/Music/[FREE] Egyptian Swag x 2000s Type Beat - PYRAMIDS.mp3')
+                        pygame.mixer.music.load(ASSETS_DIR / 'Music' / '[FREE] Egyptian Swag x 2000s Type Beat - PYRAMIDS.mp3')
                         EnemyListLVL1 = [enemy1, enemy2, enemy3,enemy4]
                         Enemy_count = 4
                         User_log.write(f"{Level} ---> {datetime.now()}\n")
                     elif event.key == pygame.K_3:
                         Level = 3
-                        pygame.mixer.music.load('Assets/Music/[FREE] FREDDIE DREDD x 1NONLY TYPE BEAT - CASKET.mp3')
+                        pygame.mixer.music.load(ASSETS_DIR / 'Music' / '[FREE] FREDDIE DREDD x 1NONLY TYPE BEAT - CASKET.mp3')
                         bullet_speed_acc_level  = 55
                         EnemyListLVL1 = [enemy1, enemy2, enemy3,enemy4,enemy5,enemy6]
                         Enemy_count = 6
                         User_log.write(f"{Level} ---> {datetime.now()}\n")
                     elif event.key == pygame.K_4:
                         Level = 4
-                        pygame.mixer.music.load(r"Assets/Music/THE WORLD'S BEAUTIFUL END.mp3")
+                        pygame.mixer.music.load(ASSETS_DIR / 'Music' / "THE WORLD'S BEAUTIFUL END.mp3")
                         bullet_speed_acc_level  = 50
                         EnemyListLVL1 = [enemy1, enemy2, enemy3,enemy4,enemy5,enemy6,enemy7,enemy8]
                         Enemy_count = 8
@@ -461,38 +468,38 @@ def trollplayer():
             troll_choice = random.randint(1, 9)
             try:
                 if troll_choice == 1:    
-                    pygame.mixer.Sound('Assets/Meme_Sounds/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-e-lutador.mp3').play()
-                    meme1 = pygame.image.load("Assets/Meme_Images/download (1).webp")
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-e-lutador.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / "Meme_Images" / "download (1).webp")
                 elif troll_choice == 2:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/duck-toy-sound.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/download.webp')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'duck-toy-sound.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / 'download.webp')
                 elif troll_choice == 3:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/frog-laughing-meme.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/Girls in my class 💯___.jpg')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'frog-laughing-meme.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / 'Girls in my class 💯___.jpg')
                 elif troll_choice == 4:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/man-snoring-meme_ctrllNn.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/Pls speed I need this my mom is kinda homeless vibes 💀😭.webp')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'man-snoring-meme_ctrllNn.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / 'Pls speed I need this my mom is kinda homeless vibes 💀😭.webp')
                 elif troll_choice == 5:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/movie_1_C2K5NH0.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/Time out meme.webp')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'movie_1_C2K5NH0.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / 'Time out meme.webp')
                 elif troll_choice == 6:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/ny-video-online-audio-converter.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/5cb454de5448b0fee86aed4056a4078c.jpg')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'ny-video-online-audio-converter.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / '5cb454de5448b0fee86aed4056a4078c.jpg')
                 elif troll_choice == 7:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/tmp_7901-951678082.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/5cb454de5448b0fee86aed4056a4078c.jpg')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'tmp_7901-951678082.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / '5cb454de5448b0fee86aed4056a4078c.jpg')
                 elif troll_choice == 8:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/windows-xp-startup_1ph012N.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/5cb454de5448b0fee86aed4056a4078c.jpg')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'windows-xp-startup_1ph012N.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / '5cb454de5448b0fee86aed4056a4078c.jpg')
                 elif troll_choice == 9:
-                    pygame.mixer.Sound('Assets/Meme_Sounds/duck-toy-sound.mp3').play()
-                    meme1 = pygame.image.load('Assets/Meme_Images/5cb454de5448b0fee86aed4056a4078c.jpg')
+                    pygame.mixer.Sound(ASSETS_DIR / 'Meme_Sounds' / 'duck-toy-sound.mp3').play()
+                    meme1 = pygame.image.load(ASSETS_DIR / 'Meme_Images' / '5cb454de5448b0fee86aed4056a4078c.jpg')
             except:
                 pass  # Handles missing assets silently if needed
 
 Last_input_time = pygame.time.get_ticks()
 
-
+'''
 #This code is for the mysql part to check,update and all
 def update_game_data(table_name, player_name, new_score):
     
@@ -575,7 +582,7 @@ if Game_State == 2:
         insert_player_data(table_name, player_name, new_score, level)
     if choice==4:
         Game_State = 1
-        
+'''        
 
 
 # MAIN GAME LOOP
@@ -627,7 +634,7 @@ while True:
                     exit() 
                 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                click = pygame.mixer.Sound('Assets/Music/soundreality-sound-of-mouse-click-4-478760.mp3')
+                click = pygame.mixer.Sound(ASSETS_DIR / 'Music' / 'soundreality-sound-of-mouse-click-4-478760.mp3')
                 click.play()
                 Last_input_time = pygame.time.get_ticks() # Reset idle timer on click
             if event.type == pygame.KEYDOWN:
